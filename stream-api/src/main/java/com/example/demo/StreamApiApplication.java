@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -28,9 +29,22 @@ public class StreamApiApplication {
         trueMoney.addWallet(Wallet.builder().id(4).name("Zhongli").balance(0).build());
 
         return runner -> {
-            findMaxValueFromWallets(trueMoney);
+
+            // findMaxValueFromWallets(trueMoney);
+            findBalanceBetween500To5000(trueMoney);
+
         };
 
+    }
+
+    private void findBalanceBetween500To5000(TrueMoney trueMoney) {
+
+        List<Wallet> filteredWallets = trueMoney.getWalletList().stream()
+                .filter(wallet -> wallet.getBalance() >= 500 && wallet.getBalance() <= 5000)
+                .toList();
+
+        filteredWallets.forEach(wallet -> System.out.println("Wallet " + wallet.getName() +
+                " has balance: " + wallet.getBalance()));
     }
 
     private void findMaxValueFromWallets(TrueMoney trueMoney) {
