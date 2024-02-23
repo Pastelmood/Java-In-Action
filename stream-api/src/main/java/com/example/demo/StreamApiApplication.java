@@ -43,14 +43,25 @@ public class StreamApiApplication {
             // findBalanceBetween500To5000(trueMoney);
             // findBalanceBetween500To5000AndSortByName(trueMoney);
             // findThreeMostBalanceWallet(trueMoney);
-            findVisionGroup(trueMoney);
+            // findVisionGroup(trueMoney);
             // sortByName(trueMoney);
             // sortByNameDesc(trueMoney);
+            sumBalance(trueMoney);
 
             
         };
 
     }
+
+    private void sumBalance(TrueMoney trueMoney) {
+        int sumBalance = trueMoney.getWalletList().stream()
+                .mapToInt(Wallet::getBalance)
+                .sum();
+
+        System.out.println("\n=====> Total balance: ");
+        System.out.println(sumBalance);
+    }
+
 
     private void findVisionGroup(TrueMoney trueMoney) {
         List<String> visionType = trueMoney.getWalletList().stream()
