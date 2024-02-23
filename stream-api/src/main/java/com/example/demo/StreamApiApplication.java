@@ -27,14 +27,38 @@ public class StreamApiApplication {
         trueMoney.addWallet(Wallet.builder().id(2).name("Paimon").balance(700).build());
         trueMoney.addWallet(Wallet.builder().id(3).name("Furina").balance(12000).build());
         trueMoney.addWallet(Wallet.builder().id(4).name("Zhongli").balance(0).build());
+        trueMoney.addWallet(Wallet.builder().id(5).name("Nahida").balance(3500).build());
+        trueMoney.addWallet(Wallet.builder().id(6).name("Venti").balance(6000).build());
+        trueMoney.addWallet(Wallet.builder().id(7).name("Raiden").balance(250).build());
+        trueMoney.addWallet(Wallet.builder().id(8).name("Childe").balance(100000).build());
 
         return runner -> {
 
             // findMaxValueFromWallets(trueMoney);
-            findBalanceBetween500To5000(trueMoney);
+            // findBalanceBetween500To5000(trueMoney);
+            // sortByName(trueMoney);
+            sortByNameDesc(trueMoney);
 
         };
 
+    }
+
+    private void sortByNameDesc(TrueMoney trueMoney) {
+        List<Wallet> sortedWallets = trueMoney.getWalletList().stream()
+                .sorted(Comparator.comparing(Wallet::getName).reversed()) // Sort by name in descending order
+                .toList();
+
+        System.out.println("\n=====> Sort wallets by name (descending): ");
+        sortedWallets.forEach(System.out::println);
+    }
+
+    private void sortByName(TrueMoney trueMoney) {
+        List<Wallet> sortedWallets = trueMoney.getWalletList().stream()
+                .sorted(Comparator.comparing(Wallet::getName))
+                .toList();
+
+        System.out.println("\n=====> Sort wallets by name: ");
+        sortedWallets.forEach(System.out::println);
     }
 
     private void findBalanceBetween500To5000(TrueMoney trueMoney) {
