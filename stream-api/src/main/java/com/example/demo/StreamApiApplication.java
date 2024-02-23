@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Bean;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static com.example.demo.data.Wallet.vision.*;
 
 @SpringBootApplication
 public class StreamApiApplication {
@@ -24,27 +25,42 @@ public class StreamApiApplication {
 
         // Mock data
         TrueMoney trueMoney = new TrueMoney();
-        trueMoney.addWallet(Wallet.builder().id(1).name("Lumine").balance(5000).build());
-        trueMoney.addWallet(Wallet.builder().id(2).name("Paimon").balance(700).build());
-        trueMoney.addWallet(Wallet.builder().id(3).name("Furina").balance(12000).build());
-        trueMoney.addWallet(Wallet.builder().id(4).name("Zhongli").balance(0).build());
-        trueMoney.addWallet(Wallet.builder().id(5).name("Nahida").balance(3500).build());
-        trueMoney.addWallet(Wallet.builder().id(6).name("Venti").balance(6000).build());
-        trueMoney.addWallet(Wallet.builder().id(7).name("Raiden").balance(250).build());
-        trueMoney.addWallet(Wallet.builder().id(8).name("Childe").balance(100000).build());
+        trueMoney.addWallet(Wallet.builder().id(1).name("Lumine").balance(5000).vision(ANEMO).build());
+        trueMoney.addWallet(Wallet.builder().id(2).name("Paimon").balance(700).vision(ANEMO).build());
+        trueMoney.addWallet(Wallet.builder().id(3).name("Furina").balance(12000).vision(HYDRO).build());
+        trueMoney.addWallet(Wallet.builder().id(4).name("Zhongli").balance(0).vision(GEO).build());
+        trueMoney.addWallet(Wallet.builder().id(5).name("Nahida").balance(3500).vision(DENDRO).build());
+        trueMoney.addWallet(Wallet.builder().id(6).name("Venti").balance(6000).vision(ANEMO).build());
+        trueMoney.addWallet(Wallet.builder().id(7).name("Raiden").balance(250).vision(ELECTRO).build());
+        trueMoney.addWallet(Wallet.builder().id(8).name("Childe").balance(1000000).vision(HYDRO).build());
+        trueMoney.addWallet(Wallet.builder().id(9).name("Ayaka").balance(40000).vision(CRYO).build());
+        trueMoney.addWallet(Wallet.builder().id(10).name("Ganyu").balance(2500).vision(CRYO).build());
+        trueMoney.addWallet(Wallet.builder().id(11).name("Hutao").balance(85000).vision(PYRO).build());
 
         return runner -> {
 
             // findMaxValueFromWallets(trueMoney);
             // findBalanceBetween500To5000(trueMoney);
             // findBalanceBetween500To5000AndSortByName(trueMoney);
-            findThreeMostBalanceWallet(trueMoney);
+            // findThreeMostBalanceWallet(trueMoney);
+            findVisionGroup(trueMoney);
             // sortByName(trueMoney);
             // sortByNameDesc(trueMoney);
 
             
         };
 
+    }
+
+    private void findVisionGroup(TrueMoney trueMoney) {
+        List<String> visionType = trueMoney.getWalletList().stream()
+                .map(Wallet::getVision)
+                .distinct()
+                .map(Enum::name)
+                .toList();
+
+        System.out.println("\n=====> All Vision Group: ");
+        visionType.forEach(System.out::println);
     }
 
     private void findThreeMostBalanceWallet(TrueMoney trueMoney) {

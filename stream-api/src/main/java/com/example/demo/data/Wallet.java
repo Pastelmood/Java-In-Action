@@ -13,4 +13,19 @@ public class Wallet {
     private int id;
     private String name;
     private int balance;
+    private vision vision;
+
+    public enum vision {
+
+        ELECTRO,
+        HYDRO,
+        PYRO,
+        DENDRO,
+        CRYO,
+        ANEMO,
+        GEO
+
+    }
+
+
 }
