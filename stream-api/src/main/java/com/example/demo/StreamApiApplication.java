@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class StreamApiApplication {
@@ -36,11 +37,34 @@ public class StreamApiApplication {
 
             // findMaxValueFromWallets(trueMoney);
             // findBalanceBetween500To5000(trueMoney);
+            // findBalanceBetween500To5000AndSortByName(trueMoney);
+            findThreeMostBalanceWallet(trueMoney);
             // sortByName(trueMoney);
-            sortByNameDesc(trueMoney);
+            // sortByNameDesc(trueMoney);
 
+            
         };
 
+    }
+
+    private void findThreeMostBalanceWallet(TrueMoney trueMoney) {
+        List<Wallet> sortedWallets = trueMoney.getWalletList().stream()
+                .sorted(Comparator.comparingInt(Wallet::getBalance).reversed())
+                .limit(3)
+                .toList();
+
+        System.out.println("\n=====> Find 3 most wallet balance: ");
+        sortedWallets.forEach(System.out::println);
+    }
+
+    private void findBalanceBetween500To5000AndSortByName(TrueMoney trueMoney) {
+        List<Wallet> sortedWallets = trueMoney.getWalletList().stream()
+                .filter(wallet -> wallet.getBalance() >= 500 && wallet.getBalance() <= 5000)
+                .sorted(Comparator.comparing(Wallet::getName))
+                .toList();
+
+        System.out.println("\n=====> Find wallets have balance from 500 to 5000 and Sort wallets by name: ");
+        sortedWallets.forEach(System.out::println);
     }
 
     private void sortByNameDesc(TrueMoney trueMoney) {
